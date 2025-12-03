@@ -5,12 +5,24 @@
 #' @import shiny
 #' @noRd
 app_ui <- function(request) {
+  #Your application server logic
+  source(app_sys("app_code/custom_ggplot_axis.R"))
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
     # Your application UI logic
-    fluidPage(
-      golem::golem_welcome_page() # Remove this line to start building your UI
+    navbarPage(
+      # theme = "cerulean",  # <--- To use a theme, uncomment this
+      "Flight Plan",
+      tabPanel("New",
+               sidebarPanel(actionButton("go", "Get Data"),
+                            selectInput(inputId = "id", label = "Patient ID", choices = unique(fp$ID)),
+                            downloadButton("report", "Generate report"),
+                            width = 2),
+               mainPanel(
+                 plotOutput("fpPlot", width = 1000, height = 400), width = 9
+               )
+      )
     )
   )
 }

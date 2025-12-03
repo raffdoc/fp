@@ -1,4 +1,3 @@
-## code to prepare `my_dataset` dataset goes here
 # get data
 cat("getting data ...")
 set.seed(12345678)
@@ -42,8 +41,5 @@ fp <- fp.df.web %>%
   )
   ) %>%
   mutate(Date = as.POSIXct(Date, format = "%d/%m/%Y %H:%M"),
-         Level_of_Risk = as.integer(Level_of_Risk))
-
-
-usethis::use_data_raw("fp")
-usethis::use_data_raw("fp.df.web")
+  Level_of_Risk = as.integer(Level_of_Risk))
+#save(fp, fp.df.web, file = "../fp.RData")

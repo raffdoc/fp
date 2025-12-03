@@ -8,7 +8,19 @@ License: MIT + file LICENSE
 Imports: 
     config,
     golem,
-    shiny
+    shiny,
+    ggplot2,
+    plotly,
+    ggthemes,
+    googledrive,
+    googlesheets4,
+    mice,
+    Hmisc,
+    visdat,
+    DataExplorer,
+    dplyr,
+    tidyr,
+    stringr
 Suggests: 
     knitr,
     rmarkdown,
@@ -21,3 +33,5 @@ Encoding: UTF-8
 Language: en-US
 LazyData: true
 RoxygenNote: 7.3.3
+Depends: 
+    R (>= 3.5)
