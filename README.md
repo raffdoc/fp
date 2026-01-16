@@ -1,5 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+[![DOI](https://zenodo.org/badge/1135733632.svg)](https://doi.org/10.5281/zenodo.18270159)
 
 # `{fp}`
 
