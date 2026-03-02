@@ -21,7 +21,7 @@ googlesheets4::gs4_auth(path = app_sys("flightplan.json"))
 # url_old <- "https://docs.google.com/spreadsheets/d/1m59-jaxfnW1TQuWhUpTZpkVTewbQlqsdZZmNf6NTX3E/edit#gid=0"
 url <- "https://docs.google.com/spreadsheets/d/1qYa-fR-t-GYrdLDabexe-FNUSMzxJyl09mv3bSz_-O8/edit?usp=sharing"
 fp.df.web <- read_sheet(ss = url,
-                        sheet = "new_fp", range = "new_fp!A1:AA200", na = "NA")
+                        sheet = "new_fp", range = "new_fp!A1:AA1000", na = "NA")
 fp <- fp.df.web %>%
   select(ID:Admission_end) %>%
   gather( key = Position,
