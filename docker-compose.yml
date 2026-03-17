@@ -1,0 +1,12 @@
+services:
+  fp-app:
+    build: .
+    image: fp-app:latest
+    ports:
+      - "3838:3838"
+    environment:
+      - R_CONFIG_ACTIVE=production
+    volumes:
+      - ./.secrets:/app/.secrets
+    working_dir: /app
+    restart: always

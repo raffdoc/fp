@@ -58,3 +58,20 @@ unloadNamespace("fp")
 ```{r, error = TRUE}
 covr::package_coverage()
 ```
+
+## Changes
+
+The `create_plot` function in `inst/app_code/plot_fp.r` has been refactored for better stability and error handling:
+
+-   **Input Validation:** Now handles `NULL`, empty, or invalid patient IDs gracefully by returning a blank plot with an informative message.
+-   **Optimization:** Patient data and metadata are filtered once at the start of the function, reducing redundant filtering operations.
+-   **Compatibility:** Updated deprecated `size` arguments to `linewidth` for compatibility with `ggplot2` (3.4.0+).
+-   **Safe Calculations:** Added robust date parsing and checks for missing values before adding vertical lines or text annotations.
+-   **Testing:** New unit tests added in `tests/testthat/test-plot_fp.R` to ensure consistent behavior across edge cases.
+-   **Dependencies:** Added `lubridate` to `Imports` in the `DESCRIPTION` file.
+
+The `get_data.r` script in `inst/app_code/` has been updated to ensure smooth data updates from the web:
+
+- **Non-Interactive Authentication:** Fixed the Google Sheets authentication flow to strictly use the `flightplan.json` service account key. This ensures that data is updated from the web without requiring a manual browser-based login ("access to Google account").
+- **Improved Path Detection:** Enhanced the logic for finding the `flightplan.json` file, checking both the installed package paths and local development directories.
+- **Robustness:** Added better error handling and logging during the data fetching process from the Google Spreadsheet.

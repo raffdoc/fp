@@ -6,7 +6,6 @@
 #' @noRd
 app_ui <- function(request) {
   #Your application server logic
-  source(app_sys("app_code/custom_ggplot_axis.R"))
   tagList(
     # Leave this function for adding external resources
     golem_add_external_resources(),
@@ -16,7 +15,7 @@ app_ui <- function(request) {
       "Flight Plan",
       tabPanel("New",
                sidebarPanel(actionButton("go", "Get Data"),
-                            selectInput(inputId = "id", label = "Patient ID", choices = unique(fp$ID)),
+                            selectInput(inputId = "id", label = "Patient ID", choices = NULL),
                             downloadButton("report", "Generate report"),
                             width = 2),
                mainPanel(

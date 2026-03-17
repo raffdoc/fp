@@ -8,3 +8,4 @@ flightplan.json
 inst/doc
 /doc/
 /Meta/
+/.secrets/

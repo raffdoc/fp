@@ -1,29 +1,34 @@
 Package: fp
 Title: Flight Plan Plot Creator
-Version: 0.0.0.9000
+Version: 0.0.1.1
 Authors@R: 
     person("Rafik", "Margaryan", , "raffdoc@gmail.com", role = c("aut", "cre"))
 Description: PKG_DESC.
 License: MIT + file LICENSE
+Depends: 
+    R (>= 3.5)
 Imports: 
     config,
     golem,
+    rmarkdown,
     shiny,
+    DataExplorer,
+    dplyr,
     ggplot2,
-    plotly,
     ggthemes,
     googledrive,
     googlesheets4,
-    mice,
     Hmisc,
-    visdat,
-    DataExplorer,
-    dplyr,
+    lubridate,
+    mice,
+    plotly,
+    readr,
+    scales,
+    stringr,
     tidyr,
-    stringr
+    visdat
 Suggests: 
     knitr,
-    rmarkdown,
     spelling,
     testthat (>= 3.0.0)
 VignetteBuilder: 
@@ -33,5 +38,3 @@ Encoding: UTF-8
 Language: en-US
 LazyData: true
 RoxygenNote: 7.3.3
-Depends: 
-    R (>= 3.5)

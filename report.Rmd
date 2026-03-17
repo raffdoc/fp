@@ -1,0 +1,31 @@
+---
+title: "Flight Plan Report"
+output: powerpoint_presentation
+params:
+  n: NA
+  data: NA
+  id_data: NA
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(fp)
+library(ggplot2)
+```
+
+## Patient Flight Plan: `r params$n`
+
+```{r plot, fig.width=10, fig.height=5}
+# Source the plot script if not already available
+# In a real golem app, create_plot should be a function in the R/ directory
+# but here it is in inst/app_code/plot_fp.r
+source(system.file("app_code/plot_fp.r", package = "fp"))
+
+if (!is.null(params$data) && !is.null(params$id_data)) {
+  create_plot(id = params$n, data = params$data, id_data = params$id_data)
+} else {
+  ggplot() + 
+    annotate("text", x = 0.5, y = 0.5, label = "Data not provided") + 
+    theme_void()
+}
+```

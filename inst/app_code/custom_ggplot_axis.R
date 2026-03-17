@@ -5,7 +5,7 @@ element_grob.element_custom <- function(element, ...)  {
 axis_custom <- function(...){
   structure(
     list(...), # this ... information is not used, btw
-    class = c("element_custom","element_blank", "element") # inheritance test workaround
-  ) 
-  
+    class = c("element_custom","element_blank", "element", "element_line") # inheritance test workaround
+  )
+
 }

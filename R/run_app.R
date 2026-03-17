@@ -14,6 +14,15 @@ run_app <- function(
   uiPattern = "/",
   ...
 ) {
+  # For Docker compatibility, ensure host/port are set in options if provided in global options
+  if (is.null(options$port)) options$port <- getOption("shiny.port")
+  if (is.null(options$host)) options$host <- getOption("shiny.host")
+
+  # Ensure data is available
+  if (!"package:fp" %in% search()) {
+    library(fp)
+  }
+
   with_golem_options(
     app = shinyApp(
       ui = app_ui,

@@ -1,38 +1,59 @@
 # get data
-cat("getting data ...")
+cat("Getting data from Google Sheets...\n")
 set.seed(12345678)
-# import data
-suppressPackageStartupMessages(library(googledrive))
-suppressPackageStartupMessages(library(googlesheets4))
-suppressPackageStartupMessages(library(mice))
-suppressPackageStartupMessages(library(Hmisc))
-suppressPackageStartupMessages(library(visdat))
-suppressPackageStartupMessages(library(DataExplorer))
-suppressPackageStartupMessages(library(dplyr))
-suppressPackageStartupMessages(library(tidyr))
-suppressPackageStartupMessages(library(stringr))
-suppressPackageStartupMessages(library(ggthemes))
-suppressPackageStartupMessages(library(lubridate))
-suppressPackageStartupMessages(library(plotly))
-suppressPackageStartupMessages(library(ggplot2))
-#options(gargle_oob_default = TRUE)
+
 # Google sheets authentification -----------------------------------------------
-googlesheets4::gs4_auth(path = app_sys("flightplan.json"))
-# url_old <- "https://docs.google.com/spreadsheets/d/1m59-jaxfnW1TQuWhUpTZpkVTewbQlqsdZZmNf6NTX3E/edit#gid=0"
+# Try to find credentials in various locations
+json_path <- ".secrets/flightplan.json"
+
+# Check in package installation directory too
+pkg_json_path <- app_sys("flightplan.json")
+pkg_secrets_json_path <- app_sys(".secrets/flightplan.json")
+
+if (!file.exists(json_path)) {
+  if (pkg_json_path != "" && file.exists(pkg_json_path)) {
+    json_path <- pkg_json_path
+  } else if (pkg_secrets_json_path != "" && file.exists(pkg_secrets_json_path)) {
+    json_path <- pkg_secrets_json_path
+  } else if (file.exists("inst/flightplan.json")) {
+    json_path <- "inst/flightplan.json"
+  } else if (file.exists("flightplan.json")) {
+    json_path <- "flightplan.json"
+  }
+}
+
+cat("Using credentials at:", json_path, "\n")
+
+if (json_path == "" || !file.exists(json_path)) {
+  stop("Credentials file 'flightplan.json' not found. Please ensure it is in 'inst/' or the current directory.")
+}
+
+# Explicitly use non-interactive authentication with the service account
+# This avoids the need for a manual Google account login.
+googlesheets4::gs4_auth(
+  path = json_path
+  )
+cat("Authentication successful.\n")
+
 url <- "https://docs.google.com/spreadsheets/d/1qYa-fR-t-GYrdLDabexe-FNUSMzxJyl09mv3bSz_-O8/edit?usp=sharing"
-fp.df.web <- read_sheet(ss = url,
+cat("Reading sheet...\n")
+
+fp.df.web <- googlesheets4::read_sheet(ss = url,
                         sheet = "new_fp", range = "new_fp!A1:AA1000", na = "NA")
+cat("Data read successfully. Rows:", nrow(fp.df.web), "\n")
+
+cat("Processing data...\n")
 fp <- fp.df.web %>%
-  select(ID:Admission_end) %>%
-  gather( key = Position,
+  dplyr::select(ID:Admission_end) %>%
+  tidyr::gather( key = Position,
           value = Date,
           Admission_start:Admission_end
   ) %>%
-  mutate(Level_of_Risk = if_else(str_detect(Position, "OR"), "5",
-                                 if_else(str_detect(Position, "Intubated"), "4",
-                                         if_else(str_detect(Position, "ICU"), "3",
-                                                 if_else(str_detect(Position, "WARD"), "2",
-                                                         if_else(str_detect(Position, "Admission"), "1",
+  dplyr::mutate(Level_of_Risk = dplyr::if_else(stringr::str_detect(Position, "OR"), "5",
+                                 dplyr::if_else(stringr::str_detect(Position, "Intubated"), "4",
+                                         dplyr::if_else(stringr::str_detect(Position, "ICU"), "3",
+                                                 dplyr::if_else(stringr::str_detect(Position, "WARD"), "2",
+                                                         dplyr::if_else(stringr::str_detect(Position, "Admission"), "1",
                                                                  Position
                                                          )
                                                  )
@@ -40,6 +61,6 @@ fp <- fp.df.web %>%
                                  )
   )
   ) %>%
-  mutate(Date = as.POSIXct(Date, format = "%d/%m/%Y %H:%M"),
+  dplyr::mutate(Date = as.POSIXct(Date, format = "%d/%m/%Y %H:%M"),
   Level_of_Risk = as.integer(Level_of_Risk))
-#save(fp, fp.df.web, file = "../fp.RData")
+cat("Data processing complete.\n")

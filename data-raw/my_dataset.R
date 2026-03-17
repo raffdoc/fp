@@ -18,7 +18,7 @@ suppressPackageStartupMessages(library(plotly))
 suppressPackageStartupMessages(library(ggplot2))
 #options(gargle_oob_default = TRUE)
 # Google sheets authentification -----------------------------------------------
-googlesheets4::gs4_auth(path = app_sys("flightplan.json"))
+googlesheets4::gs4_auth(path = system.file("flightplan.json", package = "fp"))
 # url_old <- "https://docs.google.com/spreadsheets/d/1m59-jaxfnW1TQuWhUpTZpkVTewbQlqsdZZmNf6NTX3E/edit#gid=0"
 url <- "https://docs.google.com/spreadsheets/d/1qYa-fR-t-GYrdLDabexe-FNUSMzxJyl09mv3bSz_-O8/edit?usp=sharing"
 fp.df.web <- read_sheet(ss = url,
