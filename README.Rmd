@@ -3,6 +3,7 @@ output: github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<a href="https://doi.org/10.5281/zenodo.19060380"><img src="https://zenodo.org/badge/1183983786.svg" alt="DOI"></a>
 
 ```{r, include = FALSE}
   knitr::opts_chunk$set(
@@ -24,7 +25,7 @@ output: github_document
 You can install the development version of `{fp}` like so:
 
 ```{r}
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+remotes::install_github("raffdoc/fp")
 ```
 
 ## Run
