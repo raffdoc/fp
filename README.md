@@ -1,5 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<a href="https://doi.org/10.5281/zenodo.19060380"><img src="https://zenodo.org/badge/1183983786.svg" alt="DOI"></a>
 
 # `{fp}`
 
